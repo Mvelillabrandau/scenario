@@ -22,7 +22,7 @@
 
 #include "ns3/ndnSIM/model/ndn-common.hpp"
 
-#include "ns3/ndnSIM/apps/ndn-consumer.hpp"
+#include "ndn-consumer2.hpp"
 
 namespace ns3 {
 namespace ndn {
@@ -31,7 +31,7 @@ namespace ndn {
  * @ingroup ndn-apps
  * @brief Ndn application for sending out Interest packets at a "constant" rate (Poisson process)
  */
-class ConsumerCbr2 : public Consumer {
+class ConsumerCbr2 : public Consumer2 {
 public:
   static TypeId
   GetTypeId();

@@ -17,7 +17,7 @@
  * ndnSIM, e.g., in COPYING.md file.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "ndn-consumer.hpp"
+#include "ndn-consumer2.hpp"
 #include "ns3/ptr.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
@@ -158,7 +158,7 @@ Consumer2::StopApplication() // Called at time specified by Stop
 void
 Consumer2::SendPacket()
 {
-  std::cout << "\n" << " >> HOLA: " << std::endl;
+  //std::cout << "\n" << " >> HOLA: " << std::endl;
 
   if (!m_active)
     return;
@@ -184,6 +184,7 @@ Consumer2::SendPacket()
   }
 
   //
+  std::cout << "\n" << " >> Nombre del interes" << m_interestName  << "\n" << std::endl;
   shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName);
   nameWithSequence->appendSequenceNumber(seq);
   //
@@ -191,7 +192,7 @@ Consumer2::SendPacket()
   // shared_ptr<Interest> interest = make_shared<Interest> ();
   shared_ptr<Interest> interest = make_shared<Interest>();
   interest->setNonce(m_rand->GetValue(0, std::numeric_limits<uint32_t>::max()));
-  interest->setName(*nameWithSequence);
+  interest->setName("/");
   time::milliseconds interestLifeTime(m_interestLifeTime.GetMilliSeconds());
   interest->setInterestLifetime(interestLifeTime);
 
@@ -200,6 +201,7 @@ Consumer2::SendPacket()
 
   WillSendOutInterest(seq);
 
+  std::cout << "\n" << " >> Enviando el siguiente interes: " << interest  << "\n" << std::endl;
   m_transmittedInterests(interest, this, m_face);
   m_appLink->onReceiveInterest(*interest);
 

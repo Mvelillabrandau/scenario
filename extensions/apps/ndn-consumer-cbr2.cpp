@@ -17,7 +17,7 @@
  * ndnSIM, e.g., in COPYING.md file.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "ndn-consumer-cbr.hpp"
+#include "ndn-consumer-cbr2.hpp"
 #include "ns3/ptr.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
@@ -42,7 +42,7 @@ ConsumerCbr2::GetTypeId(void)
   static TypeId tid =
     TypeId("ns3::ndn::ConsumerCbr2")
       .SetGroupName("Ndn")
-      .SetParent<Consumer>()
+      .SetParent<Consumer2>()
       .AddConstructor<ConsumerCbr2>()
 
       .AddAttribute("Frequency", "Frequency of interest packets", StringValue("1.0"),
@@ -83,13 +83,13 @@ ConsumerCbr2::ScheduleNextPacket()
   //std::cout << "\n" << " >> HOLA: " << std::endl;
   
   if (m_firstTime) {
-    m_sendEvent = Simulator::Schedule(Seconds(0.0), &Consumer::SendPacket, this);
+    m_sendEvent = Simulator::Schedule(Seconds(0.0), &Consumer2::SendPacket, this);
     m_firstTime = false;
   }
   else if (!m_sendEvent.IsRunning())
     m_sendEvent = Simulator::Schedule((m_random == 0) ? Seconds(1.0 / m_frequency)
                                                       : Seconds(m_random->GetValue()),
-                                      &Consumer::SendPacket, this);
+                                      &Consumer2::SendPacket, this);
 }
 
 void
