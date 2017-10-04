@@ -1,0 +1,15 @@
+/latercera/index
+/lasultimasnoticias/index
+/imagenes/valparaiso
+/imagenes/santiago
+/receta/cocina/harina
+/example/testApp
+/yapo/bicicletas/pedales
+/example/testApp
+/mercadolibre/jardin/tierra
+/imagenes/santiago
+/imagenes/chillan
+/playstation/juegos/accion
+/imagenes/santiago
+/lacuarta/index/08012017
+/example/testApp
