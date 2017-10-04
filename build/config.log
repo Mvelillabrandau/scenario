@@ -1,4 +1,4 @@
-# project template (0.1) configured on Thu Aug 24 00:17:28 2017 by
+# project template (0.1) configured on Wed Oct  4 11:37:09 2017 by
 # waf 1.8.5 (abi 98, python 2070cf0 on linux2)
 # using ./waf configure
 #
@@ -28,12 +28,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/.conf_check_7548e93459866bc928fea0221b327b83/test.cpp[0m
+[1/2] Compiling [32mbuild/.conf_check_ae5388e5dc83cea25fb1530abec11fa7/test.cpp[0m
 
-['/usr/bin/g++', '-Werror', '-std=c++11', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_7548e93459866bc928fea0221b327b83/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/.conf_check_7548e93459866bc928fea0221b327b83/testbuild/testprog[0m
+['/usr/bin/g++', '-Werror', '-std=c++11', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_ae5388e5dc83cea25fb1530abec11fa7/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/.conf_check_ae5388e5dc83cea25fb1530abec11fa7/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_7548e93459866bc928fea0221b327b83/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_ae5388e5dc83cea25fb1530abec11fa7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 -std=c++11
 ----------------------------------------
 Checking supported CXXFLAGS
@@ -45,12 +45,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/.conf_check_41e6e347b599c9572f72ca7f9ac63bb8/test.cpp[0m
+[1/2] Compiling [32mbuild/.conf_check_df1ac79dc5bc536ddb99e48ebeafcdf4/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-Werror', '-Wall', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_41e6e347b599c9572f72ca7f9ac63bb8/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/.conf_check_41e6e347b599c9572f72ca7f9ac63bb8/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-Werror', '-Wall', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_df1ac79dc5bc536ddb99e48ebeafcdf4/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/.conf_check_df1ac79dc5bc536ddb99e48ebeafcdf4/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_41e6e347b599c9572f72ca7f9ac63bb8/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_df1ac79dc5bc536ddb99e48ebeafcdf4/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ==>
 
 int main(int argc, char **argv) {
@@ -59,12 +59,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/.conf_check_ce762194f38632391919c94e994c5f02/test.cpp[0m
+[1/2] Compiling [32mbuild/.conf_check_49b86f8c7d05b9f99d7c7350705d2b97/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-Werror', '-O2', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_ce762194f38632391919c94e994c5f02/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/.conf_check_ce762194f38632391919c94e994c5f02/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-Werror', '-O2', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_49b86f8c7d05b9f99d7c7350705d2b97/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/.conf_check_49b86f8c7d05b9f99d7c7350705d2b97/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_ce762194f38632391919c94e994c5f02/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_49b86f8c7d05b9f99d7c7350705d2b97/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ==>
 
 int main(int argc, char **argv) {
@@ -73,12 +73,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/.conf_check_b3d2448e5dd66c54b2712020c1386dfc/test.cpp[0m
+[1/2] Compiling [32mbuild/.conf_check_93c225a66e6908dc88e798c17275178d/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-Werror', '-g', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_b3d2448e5dd66c54b2712020c1386dfc/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/.conf_check_b3d2448e5dd66c54b2712020c1386dfc/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-Werror', '-g', '../test.cpp', '-c', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_93c225a66e6908dc88e798c17275178d/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/.conf_check_93c225a66e6908dc88e798c17275178d/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_b3d2448e5dd66c54b2712020c1386dfc/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/mathias/ndnSIM/scenario/build/.conf_check_93c225a66e6908dc88e798c17275178d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 -Wall -O2 -g
 ----------------------------------------
 Checking for program 'pkg-config'

@@ -83,7 +83,7 @@ ConsumerCbr2::ScheduleNextPacket()
   //std::cout << "\n" << " >> HOLA: " << std::endl;
   
   if (m_firstTime) {
-    m_sendEvent = Simulator::Schedule(Seconds(0.0), &Consumer2::SendPacket, this);
+    m_sendEvent = Simulator::Schedule(Seconds(0.0), &Consumer::SendPacket, this);
     m_firstTime = false;
   }
   else if (!m_sendEvent.IsRunning())
