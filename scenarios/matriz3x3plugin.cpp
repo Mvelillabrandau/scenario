@@ -33,7 +33,7 @@ main(int argc, char* argv[])
   consumerNodes.Add(Names::Find<Node>("Node0"));
 
   // Install NDN applications
-  std::string prefix = "/prefix";
+  std::string prefix = "/MATHIAS";
 
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2");
   consumerHelper.SetPrefix(prefix);
