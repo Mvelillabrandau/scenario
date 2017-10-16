@@ -16,8 +16,10 @@ main(int argc, char* argv[])
   topologyReader.SetFileName("extensions/topo-grid-3x3.txt");
   topologyReader.Read();
 
-  // Install NDN stack on all nodes
+  // Se instala NDN stack en todos los nodos
   ndn::StackHelper ndnHelper;
+
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10000");
   ndnHelper.InstallAll();
 
   // Set BestRoute strategy
@@ -33,11 +35,11 @@ main(int argc, char* argv[])
   consumerNodes.Add(Names::Find<Node>("Node0"));
 
   // Install NDN applications
-  std::string prefix = "/MATHIAS";
+  std::string prefix = "/prefix";
 
-  ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2");
+  ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr");
   consumerHelper.SetPrefix(prefix);
-  consumerHelper.SetAttribute("Frequency", StringValue("1")); // 100 interests a second
+  consumerHelper.SetAttribute("Frequency", StringValue("1")); // 1 interests a second
   consumerHelper.Install(consumerNodes);
 
   ndn::AppHelper producerHelper("ns3::ndn::Producer");
@@ -52,6 +54,8 @@ main(int argc, char* argv[])
   ndn::GlobalRoutingHelper::CalculateRoutes();
 
   Simulator::Stop(Seconds(20.0));
+
+  //ndn::CsTracer::InstallAll("results/cs-trace.txt", Seconds(1)); // Poner cache 
 
   Simulator::Run();
   Simulator::Destroy();

@@ -37,8 +37,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/ref.hpp>
 
-#include <iostream>
-#include <fstream>
+//#include <iostream>
+//#include <fstream>
 
 NS_LOG_COMPONENT_DEFINE("ndn.Consumer2");
 
@@ -188,21 +188,22 @@ Consumer2::SendPacket()
 
   //
   //std::cout << "\n" << " >> Nombre del interes" << m_interestName  << "\n" << std::endl;
-  //shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName);
-  //nameWithSequence->appendSequenceNumber(seq);
+  shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName);
+  nameWithSequence->appendSequenceNumber(seq);
 
-  // shared_ptr<Interest> interest = make_shared<Interest> ();
+  //shared_ptr<Interest> interest = make_shared<Interest> ();
   shared_ptr<Interest> interest = make_shared<Interest>();
   interest->setNonce(m_rand->GetValue(0, std::numeric_limits<uint32_t>::max()));
-  //interest->setName(*nameWithSequence);
+  interest->setName(*nameWithSequence);
 
-  std::ifstream ficheroEntrada;
-  std::string frase;
-  ficheroEntrada.open ("extensions/consultas.txt");
+  //std::ifstream ficheroEntrada;
+  //std::string frase;
+  //ficheroEntrada.open ("extensions/consultas.txt");
+
   //Aplicacion interna del nodo consumidor
-  getline (ficheroEntrada,frase); //Obtengo la primera linea
+  //getline (ficheroEntrada,frase); //Obtengo la primera linea
+  //interest->setName(frase);
 
-  interest->setName(frase);
   time::milliseconds interestLifeTime(m_interestLifeTime.GetMilliSeconds());
   interest->setInterestLifetime(interestLifeTime);
 
@@ -217,7 +218,7 @@ Consumer2::SendPacket()
   m_appLink->onReceiveInterest(*interest);
 
   ScheduleNextPacket();
-  ficheroEntrada.close();
+  //ficheroEntrada.close();
 }
 
 ///////////////////////////////////////////////////
