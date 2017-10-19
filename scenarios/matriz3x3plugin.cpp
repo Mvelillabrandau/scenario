@@ -7,14 +7,14 @@
 namespace ns3 {
 
 int
-main(int argc, char* argv[])
+main(int argc, char* argv[]) // main
 {
   CommandLine cmd;
   cmd.Parse(argc, argv);
 
-  AnnotatedTopologyReader topologyReader("", 25);
-  topologyReader.SetFileName("extensions/topo-grid-3x3.txt");
-  topologyReader.Read();
+  AnnotatedTopologyReader topologyReader("", 25); 
+  topologyReader.SetFileName("extensions/topo-grid-3x3.txt"); // Se llama al archivo 
+  topologyReader.Read(); // Lecura del archivo con la topologia.
 
   // Se instala NDN stack en todos los nodos
   ndn::StackHelper ndnHelper;
@@ -34,18 +34,20 @@ main(int argc, char* argv[])
   NodeContainer consumerNodes;
   consumerNodes.Add(Names::Find<Node>("Node0"));
 
-  // Install NDN applications
+
+  // Se instalan las aplicaciones NDN
   std::string prefix = "/prefix";
 
-  ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr");
-  consumerHelper.SetPrefix(prefix);
-  consumerHelper.SetAttribute("Frequency", StringValue("1")); // 1 interests a second
-  consumerHelper.Install(consumerNodes);
+  ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr"); // Se crea la instancia
+  consumerHelper.SetPrefix(prefix); // Seteo del prefijo
+  consumerHelper.SetAttribute("Frequency", StringValue("1")); // Seteo de la frecuencia en que enviara 
+                                                              // los intereses (1 por segundo).
+  consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
 
-  ndn::AppHelper producerHelper("ns3::ndn::Producer");
-  producerHelper.SetPrefix(prefix);
-  producerHelper.SetAttribute("PayloadSize", StringValue("1024"));
-  producerHelper.Install(producer);
+  ndn::AppHelper producerHelper("ns3::ndn::Producer"); // Se crea la instancia
+  producerHelper.SetPrefix(prefix); //Seteo del prefijo
+  producerHelper.SetAttribute("PayloadSize", StringValue("1024")); //
+  producerHelper.Install(producer); // Se instala la aplicacion en una o mas nodos.
 
   // Add /prefix origins to ndn::GlobalRouter
   ndnGlobalRoutingHelper.AddOrigins(prefix, producer);
