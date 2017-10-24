@@ -22,7 +22,7 @@ main(int argc, char* argv[]) // main
   // Se instala NDN stack en todos los nodos
   ndn::StackHelper ndnHelper;
 
-  ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10000");
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Double", "MaxSize", "10000");
 
   nodo1.Add(Names::Find<Node>("Node1"));// Se busca el nodo segun nombre
   ndnHelper.Install(nodo1); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)

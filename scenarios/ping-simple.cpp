@@ -84,8 +84,7 @@ main(int argc, char *argv[])
   ndnHelper.SetOldContentStore("ns3::ndn::cs::Nocache"); // Se define la politica de NO CACHE
   ndnHelper.Install(nodes.Get(0)); // Se instala en el nodo 0 (COMSUMIDOR)
 
-  ndnHelper.setCsSize(100); // Se especifica el tamaño del CACHE
-  ndnHelper.setPolicy("nfd::cs::lru"); // Se define la politica de reemplazo CACHE
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Nocache");
   std::cout << "Antes el router \n" << std::endl;
   ndnHelper.Install(nodes.Get(1)); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)
   std::cout << "Despues el router \n" << std::endl;
@@ -121,6 +120,8 @@ main(int argc, char *argv[])
   ndn::GlobalRoutingHelper::CalculateRoutes();
 
   Simulator::Stop(Seconds(50.0));
+
+  //ndn::CsTracer::InstallAll("results/cs-trace.txt", Seconds(1)); // Poner cache 
 
   Simulator::Run();
   Simulator::Destroy();
