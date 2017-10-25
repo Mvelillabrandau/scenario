@@ -67,7 +67,7 @@ main(int argc, char* argv[]) // main
   // Se instalan las aplicaciones NDN
   std::string prefix = "/prefix";
 
-  ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr"); // Se crea la instancia
+  ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
   consumerHelper.SetPrefix(prefix); // Seteo del prefijo
   consumerHelper.SetAttribute("Frequency", StringValue("1")); // Seteo de la frecuencia en que enviara 
                                                               // los intereses (1 por segundo).
