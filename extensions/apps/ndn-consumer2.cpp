@@ -85,6 +85,7 @@ Consumer2::Consumer2()
   : m_rand(CreateObject<UniformRandomVariable>())
   , m_seq(0)
   , m_seqMax(0) // don't request anything
+  , m_aux(true)
 {
   NS_LOG_FUNCTION_NOARGS();
 
@@ -162,7 +163,6 @@ void
 Consumer2::SendPacket()
 {
   //std::cout << "\n" << " >> HOLA: " << std::endl;
-  std::ifstream ficheroEntrada;
   std::string frase;
 
   if (!m_active)
@@ -187,21 +187,37 @@ Consumer2::SendPacket()
 
     seq = m_seq++;
   }
+  std::cout << "\n" << " >> Seq: " << seq << "\n" << std::endl;
+  /*std::cout << "\n" << " >> Valor de aux. " << m_aux << "\n" << std::endl;
+  if (m_aux){
+    std::cout << "\n" << " >> Valor de aux. " << m_aux << "\n" << std::endl;
+    std::cout << "\n" << " >> Llegue aux 0." << "\n" << std::endl;
+    ficheroEntrada.open ("extensions/consultas.txt");
+    getline (ficheroEntrada,frase);
+    //std::cout << "\n" << " >> Frase1" << frase  << "\n" << std::endl;
+    m_aux = false;
 
-  //
+  }else{
+    std::cout << "\n" << " >> Llegue aux 1." << "\n" << std::endl;
+    getline (ficheroEntrada,frase);
+    //std::cout << "\n" << " >> Frase2" << frase  << "\n" << std::endl;
+  }*/
+
   //std::cout << "\n" << " >> Nombre del interes" << m_interestName  << "\n" << std::endl;
-  ficheroEntrada.open ("extensions/consultas.txt");
-  getline (ficheroEntrada,frase); //Obtengo la primera linea
-  shared_ptr<Name> NewName = make_shared<Name>(frase);
+  //ficheroEntrada.open ("extensions/consultas.txt");
+  //getline (ficheroEntrada,frase); //Obtengo la primera linea
 
-  //shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName);
-  //nameWithSequence->appendSequenceNumber(seq);
+  //shared_ptr<Name> NewName = make_shared<Name>(frase);
+
+  shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName);
+  nameWithSequence->appendSequenceNumber(seq);
+  
 
   //shared_ptr<Interest> interest = make_shared<Interest> ();
   shared_ptr<Interest> interest = make_shared<Interest>();
   interest->setNonce(m_rand->GetValue(0, std::numeric_limits<uint32_t>::max()));
-  //interest->setName(*nameWithSequence);
-  interest->setName(*NewName);
+  interest->setName(*nameWithSequence);
+  //interest->setName(*NewName);
 
   time::milliseconds interestLifeTime(m_interestLifeTime.GetMilliSeconds());
   interest->setInterestLifetime(interestLifeTime);
@@ -215,9 +231,9 @@ Consumer2::SendPacket()
   
   m_transmittedInterests(interest, this, m_face);
   m_appLink->onReceiveInterest(*interest);
+  std::cout << "\n" << " >> Llegue aca 1." << "\n" << std::endl;
 
   ScheduleNextPacket();
-  ficheroEntrada.close();
 }
 
 ///////////////////////////////////////////////////

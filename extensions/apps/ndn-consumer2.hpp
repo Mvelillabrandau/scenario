@@ -39,6 +39,9 @@
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/member.hpp>
 
+#include <iostream>
+#include <fstream>
+
 namespace ns3 {
 namespace ndn {
 
@@ -139,6 +142,8 @@ protected:
   EventId m_sendEvent; ///< @brief EventId of pending "send packet" event
   Time m_retxTimer;    ///< @brief Currently estimated retransmission timer
   EventId m_retxEvent; ///< @brief Event to check whether or not retransmission should be performed
+  bool m_aux;
+  std::ifstream ficheroEntrada;
 
   Ptr<RttEstimator> m_rtt; ///< @brief RTT estimator
 

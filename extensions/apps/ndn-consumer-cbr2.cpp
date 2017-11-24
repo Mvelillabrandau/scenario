@@ -29,6 +29,9 @@
 #include "ns3/integer.h"
 #include "ns3/double.h"
 
+#include <iostream>
+#include <fstream>
+
 NS_LOG_COMPONENT_DEFINE("ndn.ConsumerCbr2");
 
 namespace ns3 {
@@ -81,15 +84,21 @@ ConsumerCbr2::ScheduleNextPacket()
   // double mean = 8.0 * m_payloadSize / m_desiredRate.GetBitRate ();
   // std::cout << "next: " << Simulator::Now().ToDouble(Time::S) + mean << "s\n";
   //std::cout << "\n" << " >> HOLA: " << std::endl;
+
   
   if (m_firstTime) {
+    //ficheroEntrada.open ("extensions/consultas.txt");
+    //getline (ficheroEntrada,frase);
+    std::cout << "\n" << " >> Llegue aca 0." << "\n" << std::endl;
     m_sendEvent = Simulator::Schedule(Seconds(0.0), &Consumer2::SendPacket, this);
     m_firstTime = false;
   }
-  else if (!m_sendEvent.IsRunning())
+  else if (!m_sendEvent.IsRunning()){
+    std::cout << "\n" << " >> Llegue aca 2." << "\n" << std::endl;
     m_sendEvent = Simulator::Schedule((m_random == 0) ? Seconds(1.0 / m_frequency)
                                                       : Seconds(m_random->GetValue()),
                                       &Consumer2::SendPacket, this);
+    }
 }
 
 void

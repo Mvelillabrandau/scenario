@@ -19,10 +19,10 @@ main(int argc, char* argv[]) // main
   // Instancio el objeto consumerNodes
   NodeContainer nodo1, nodo2, nodo3, nodo4, nodo5, nodo6 ,nodo7, consumerNodes;
 
-  // Se instala NDN stack en todos los nodos
+  // Se instancia la variable ndnHelper
   ndn::StackHelper ndnHelper;
 
-  ndnHelper.SetOldContentStore("ns3::ndn::cs::Double", "MaxSize", "10000");
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10000");
 
   nodo1.Add(Names::Find<Node>("Node1"));// Se busca el nodo segun nombre
   ndnHelper.Install(nodo1); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)
@@ -57,7 +57,7 @@ main(int argc, char* argv[]) // main
   std::cout << "Instalando en el router PRODUCTOR \n" << std::endl;
 
   // Set BestRoute strategy
-  ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/best-route");
+  ndn::StrategyChoiceHelper::InstallAll("/prefix", "/localhost/nfd/strategy/best-route");
 
   // Installing global routing interface on all nodes
   ndn::GlobalRoutingHelper ndnGlobalRoutingHelper;
@@ -66,6 +66,8 @@ main(int argc, char* argv[]) // main
 
   // Se instalan las aplicaciones NDN
   std::string prefix = "/prefix";
+  std::string prefix1 = "/latercera";
+  std::string prefix2 = "/laterceras";
 
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
   consumerHelper.SetPrefix(prefix); // Seteo del prefijo
@@ -73,7 +75,7 @@ main(int argc, char* argv[]) // main
                                                               // los intereses (1 por segundo).
   consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
 
-  ndn::AppHelper producerHelper("ns3::ndn::Producer"); // Se crea la instancia
+  ndn::AppHelper producerHelper("ns3::ndn::Producer2"); // Se crea la instancia
   producerHelper.SetPrefix(prefix); //Seteo del prefijo
   producerHelper.SetAttribute("PayloadSize", StringValue("1024")); //
   producerHelper.Install(producer); // Se instala la aplicacion en una o mas nodos.
@@ -86,7 +88,7 @@ main(int argc, char* argv[]) // main
 
   Simulator::Stop(Seconds(20.0));
 
-  ndn::CsTracer::InstallAll("results/cs-trace.txt", Seconds(1)); // Poner cache 
+  //ndn::CsTracer::InstallAll("results/cs-trace.txt", Seconds(1)); // Poner cache 
 
   Simulator::Run();
   Simulator::Destroy();
