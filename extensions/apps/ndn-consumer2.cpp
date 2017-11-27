@@ -171,7 +171,7 @@ Consumer2::SendPacket()
 
   uint32_t seq = std::numeric_limits<uint32_t>::max(); // invalid
 
- /* while (m_retxSeqs.size()) {
+  /*while (m_retxSeqs.size()) {
     seq = *m_retxSeqs.begin();
     m_retxSeqs.erase(m_retxSeqs.begin());
     break;
@@ -185,8 +185,8 @@ Consumer2::SendPacket()
     }
 
     seq = m_seq++;
-  }
-  */
+  }*/
+  
 
   //Lectura del archivo con la lista de intereses (consultas)
   std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
@@ -231,7 +231,6 @@ Consumer2::SendPacket()
                        //aleatoriamente que se usa para detectar y descartar mensajes de interés duplicados
 
   interest->setName(*nameWithSequence);
-  //interest->setName(*newName);
 
   time::milliseconds interestLifeTime(m_interestLifeTime.GetMilliSeconds());
   interest->setInterestLifetime(interestLifeTime);// indica el tiempo (aproximado) restante antes de 

@@ -1,0 +1,4 @@
+casa = 0
+perro = 1
+hijo = 2
+animal = 3

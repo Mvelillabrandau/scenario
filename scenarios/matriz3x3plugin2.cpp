@@ -68,22 +68,25 @@ main(int argc, char* argv[]) // main
 
   // Se instalan las aplicaciones NDN
   std::string prefix = "/prefix";
-  std::string prefix1 = "/latercera";
-  std::string prefix2 = "/laterceras";
+  //std::string prefix1 = "/perro";
+  //std::string prefix2 = "/latercera";
 
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
-  consumerHelper.SetPrefix(prefix1); // Seteo del prefijo
+  consumerHelper.SetPrefix(prefix); // Seteo del prefijo
   consumerHelper.SetAttribute("Frequency", StringValue("1")); // Seteo de la frecuencia en que enviara 
                                                               // los intereses (1 por segundo).
   consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
 
   ndn::AppHelper producerHelper("ns3::ndn::Producer2"); // Se crea la instancia
-  producerHelper.SetPrefix(prefix1); //Seteo del prefijo
+  producerHelper.SetPrefix(prefix); //Seteo del prefijo
   producerHelper.SetAttribute("PayloadSize", StringValue("1024")); //
   producerHelper.Install(producer); // Se instala la aplicacion en una o mas nodos.
 
+
+
   // Add /prefix origins to ndn::GlobalRouter
-  ndnGlobalRoutingHelper.AddOrigins(prefix1, producer);
+  ndnGlobalRoutingHelper.AddOrigins(prefix, producer);
+  //ndnGlobalRoutingHelper.AddOrigins(prefix1, producer);
 
   // Calculate and install FIBs
   ndn::GlobalRoutingHelper::CalculateRoutes();
