@@ -93,7 +93,7 @@ Producer2::StopApplication()
 void
 Producer2::OnInterest(shared_ptr<const Interest> interest)
 {
-  std::cout << "\n" << " >> Estoy en producer" << "\n" << std::endl;
+  //std::cout << "\n" << " >> Estoy al principio en producer" << "\n" << std::endl;
   App::OnInterest(interest); // tracing inside
 
   NS_LOG_FUNCTION(this << interest);
@@ -130,6 +130,7 @@ Producer2::OnInterest(shared_ptr<const Interest> interest)
 
   m_transmittedDatas(data, this, m_face);
   m_appLink->onReceiveData(*data);
+  //std::cout << "\n" << " >> Estoy al final en producer" << "\n" << std::endl;
 }
 
 } // namespace ndn

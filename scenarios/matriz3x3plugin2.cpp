@@ -23,6 +23,8 @@ main(int argc, char* argv[]) // main
   ndn::StackHelper ndnHelper;
 
   ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10000");
+  //ndnHelper.setCsSize(100);
+  //ndnHelper.setPolicy("nfd::cs::lru");
 
   nodo1.Add(Names::Find<Node>("Node1"));// Se busca el nodo segun nombre
   ndnHelper.Install(nodo1); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)
@@ -57,7 +59,7 @@ main(int argc, char* argv[]) // main
   std::cout << "Instalando en el router PRODUCTOR \n" << std::endl;
 
   // Set BestRoute strategy
-  ndn::StrategyChoiceHelper::InstallAll("/prefix", "/localhost/nfd/strategy/best-route");
+  ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/best-route");
 
   // Installing global routing interface on all nodes
   ndn::GlobalRoutingHelper ndnGlobalRoutingHelper;
@@ -70,18 +72,18 @@ main(int argc, char* argv[]) // main
   std::string prefix2 = "/laterceras";
 
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
-  consumerHelper.SetPrefix(prefix); // Seteo del prefijo
+  consumerHelper.SetPrefix(prefix1); // Seteo del prefijo
   consumerHelper.SetAttribute("Frequency", StringValue("1")); // Seteo de la frecuencia en que enviara 
                                                               // los intereses (1 por segundo).
   consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
 
   ndn::AppHelper producerHelper("ns3::ndn::Producer2"); // Se crea la instancia
-  producerHelper.SetPrefix(prefix); //Seteo del prefijo
+  producerHelper.SetPrefix(prefix1); //Seteo del prefijo
   producerHelper.SetAttribute("PayloadSize", StringValue("1024")); //
   producerHelper.Install(producer); // Se instala la aplicacion en una o mas nodos.
 
   // Add /prefix origins to ndn::GlobalRouter
-  ndnGlobalRoutingHelper.AddOrigins(prefix, producer);
+  ndnGlobalRoutingHelper.AddOrigins(prefix1, producer);
 
   // Calculate and install FIBs
   ndn::GlobalRoutingHelper::CalculateRoutes();

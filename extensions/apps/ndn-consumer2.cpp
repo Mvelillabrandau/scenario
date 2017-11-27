@@ -85,7 +85,7 @@ Consumer2::Consumer2()
   : m_rand(CreateObject<UniformRandomVariable>())
   , m_seq(0)
   , m_seqMax(0) // don't request anything
-  , m_aux(true)
+  , firstRead(true)
 {
   NS_LOG_FUNCTION_NOARGS();
 
@@ -163,7 +163,6 @@ void
 Consumer2::SendPacket()
 {
   //std::cout << "\n" << " >> HOLA: " << std::endl;
-  std::string frase;
 
   if (!m_active)
     return;
@@ -172,7 +171,7 @@ Consumer2::SendPacket()
 
   uint32_t seq = std::numeric_limits<uint32_t>::max(); // invalid
 
-  while (m_retxSeqs.size()) {
+ /* while (m_retxSeqs.size()) {
     seq = *m_retxSeqs.begin();
     m_retxSeqs.erase(m_retxSeqs.begin());
     break;
@@ -187,54 +186,71 @@ Consumer2::SendPacket()
 
     seq = m_seq++;
   }
-  std::cout << "\n" << " >> Seq: " << seq << "\n" << std::endl;
-  /*std::cout << "\n" << " >> Valor de aux. " << m_aux << "\n" << std::endl;
-  if (m_aux){
-    std::cout << "\n" << " >> Valor de aux. " << m_aux << "\n" << std::endl;
+  */
+
+  //Lectura del archivo con la lista de intereses (consultas)
+  std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
+  if (firstRead){
+    std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
     std::cout << "\n" << " >> Llegue aux 0." << "\n" << std::endl;
-    ficheroEntrada.open ("extensions/consultas.txt");
+    ficheroEntrada.open ("extensions/consultas2.txt");
     getline (ficheroEntrada,frase);
+    seq = std::stoi(frase);
+
     //std::cout << "\n" << " >> Frase1" << frase  << "\n" << std::endl;
-    m_aux = false;
+    firstRead = false;
 
   }else{
     std::cout << "\n" << " >> Llegue aux 1." << "\n" << std::endl;
     getline (ficheroEntrada,frase);
+    seq = std::stoi(frase);
     //std::cout << "\n" << " >> Frase2" << frase  << "\n" << std::endl;
-  }*/
+  }
 
   //std::cout << "\n" << " >> Nombre del interes" << m_interestName  << "\n" << std::endl;
   //ficheroEntrada.open ("extensions/consultas.txt");
   //getline (ficheroEntrada,frase); //Obtengo la primera linea
 
-  //shared_ptr<Name> NewName = make_shared<Name>(frase);
+  //shared_ptr<Name> newName = make_shared<Name>(Name(frase));
+  //NewName->toUri(frase);
+  //std::cout << "\n" << " >> Seq: " << seq << "\n" << std::endl;
 
-  shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName);
-  nameWithSequence->appendSequenceNumber(seq);
+  /*if (seq%5 == 0){
+    seq = 1;
+  }
+  std::cout << "\n" << " >> Seq: " << seq << "\n" << std::endl;
+  */
+
+  shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName); //crear nombre con secuencia
+  nameWithSequence->appendSequenceNumber(seq); //agregar la secuencia al final.
   
 
   //shared_ptr<Interest> interest = make_shared<Interest> ();
-  shared_ptr<Interest> interest = make_shared<Interest>();
-  interest->setNonce(m_rand->GetValue(0, std::numeric_limits<uint32_t>::max()));
+  shared_ptr<Interest> interest = make_shared<Interest>(); //Crea el interest
+  interest->setNonce(m_rand->GetValue(0, std::numeric_limits<uint32_t>::max())); //cadena de bytes generada 
+                       //aleatoriamente que se usa para detectar y descartar mensajes de interés duplicados
+
   interest->setName(*nameWithSequence);
-  //interest->setName(*NewName);
+  //interest->setName(*newName);
 
   time::milliseconds interestLifeTime(m_interestLifeTime.GetMilliSeconds());
-  interest->setInterestLifetime(interestLifeTime);
+  interest->setInterestLifetime(interestLifeTime);// indica el tiempo (aproximado) restante antes de 
+                                                  //            que el interés expire.
+
 
   // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
   NS_LOG_INFO("> Interest for " << seq);
 
-  WillSendOutInterest(seq);
-
+  WillSendOutInterest(seq); //Un evento que se dispara justo antes de enviar 
+                            //un paquete de Interés (el envío es inevitable)
   std::cout << "\n" << " >> Enviando el siguiente interes: " << interest->getName() << "\n" << std::endl;
   
   m_transmittedInterests(interest, this, m_face);
   m_appLink->onReceiveInterest(*interest);
-  std::cout << "\n" << " >> Llegue aca 1." << "\n" << std::endl;
+  std::cout << "\n" << " >> Llegue aca final SendPacket." << "\n" << std::endl;
 
   ScheduleNextPacket();
-}
+  }
 
 ///////////////////////////////////////////////////
 //          Process incoming packets             //
@@ -308,7 +324,8 @@ Consumer2::OnTimeout(uint32_t sequenceNumber)
 }
 
 void
-Consumer2::WillSendOutInterest(uint32_t sequenceNumber)
+Consumer2::WillSendOutInterest(uint32_t sequenceNumber) //Un evento que se dispara justo antes de enviar 
+                                                        //un paquete de Interés (el envío es inevitable)
 {
   NS_LOG_DEBUG("Trying to add " << sequenceNumber << " with " << Simulator::Now() << ". already "
                                 << m_seqTimeouts.size() << " items");
