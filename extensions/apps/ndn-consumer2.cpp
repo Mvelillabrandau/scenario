@@ -189,11 +189,12 @@ Consumer2::SendPacket()
   
 
   //Lectura del archivo con la lista de intereses (consultas)
-  std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
+  //std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
   if (firstRead){
-    std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
-    std::cout << "\n" << " >> Llegue aux 0." << "\n" << std::endl;
-    ficheroEntrada.open ("extensions/consultas2.txt");
+    //std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
+    //std::cout << "\n" << " >> Llegue aux 0." << "\n" << std::endl;
+    //ficheroEntrada.open ("extensions/consultas2.txt");
+    ficheroEntrada.open ("extensions/logConsulta/LogInterest.dat");
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
 
@@ -201,7 +202,7 @@ Consumer2::SendPacket()
     firstRead = false;
 
   }else{
-    std::cout << "\n" << " >> Llegue aux 1." << "\n" << std::endl;
+    //std::cout << "\n" << " >> Llegue aux 1." << "\n" << std::endl;
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
     //std::cout << "\n" << " >> Frase2" << frase  << "\n" << std::endl;
@@ -246,7 +247,7 @@ Consumer2::SendPacket()
   
   m_transmittedInterests(interest, this, m_face);
   m_appLink->onReceiveInterest(*interest);
-  std::cout << "\n" << " >> Llegue aca final SendPacket." << "\n" << std::endl;
+  //std::cout << "\n" << " >> Llegue aca final SendPacket." << "\n" << std::endl;
 
   ScheduleNextPacket();
   }
