@@ -22,7 +22,7 @@ main(int argc, char* argv[]) // main
   // Se instancia la variable ndnHelper
   ndn::StackHelper ndnHelper;
 
-  ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10000");
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Fifo", "MaxSize", "200000");
   //ndnHelper.setCsSize(100);
   //ndnHelper.setPolicy("nfd::cs::lru");
 
@@ -74,7 +74,7 @@ main(int argc, char* argv[]) // main
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
   consumerHelper.SetPrefix(prefix); // Seteo del prefijo
   consumerHelper.SetAttribute("Frequency", DoubleValue (1000));
-  consumerHelper.SetAttribute("Randomize", StringValue("exponential")); // Seteo de la frecuencia en que enviara 
+  consumerHelper.SetAttribute("Randomize", StringValue("uniform")); // Seteo de la frecuencia en que enviara 
                                                               // los intereses (1 por segundo).
   consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
 
@@ -94,7 +94,10 @@ main(int argc, char* argv[]) // main
 
   Simulator::Stop(Seconds(20.0));
 
-  ndn::CsTracer::InstallAll("results/cs-trace.txt", Seconds(1)); // Poner cache 
+  ndn::CsTracer::InstallAll("results/cs-trace-T2.txt", Seconds(0.5));
+  ndn::L3RateTracer::InstallAll("results/rate-trace-T2.txt", Seconds(0.5));
+  L2RateTracer::InstallAll("results/drop-trace-T2.txt", Seconds(0.5));
+
 
   Simulator::Run();
   Simulator::Destroy();

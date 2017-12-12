@@ -191,36 +191,17 @@ Consumer2::SendPacket()
   //Lectura del archivo con la lista de intereses (consultas)
   //std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
   if (firstRead){
-    //std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
-    //std::cout << "\n" << " >> Llegue aux 0." << "\n" << std::endl;
-    //ficheroEntrada.open ("extensions/consultas2.txt");
+
     ficheroEntrada.open ("extensions/logConsulta/LogInterest.dat");
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
 
-    //std::cout << "\n" << " >> Frase1" << frase  << "\n" << std::endl;
     firstRead = false;
 
   }else{
-    //std::cout << "\n" << " >> Llegue aux 1." << "\n" << std::endl;
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
-    //std::cout << "\n" << " >> Frase2" << frase  << "\n" << std::endl;
   }
-
-  //std::cout << "\n" << " >> Nombre del interes" << m_interestName  << "\n" << std::endl;
-  //ficheroEntrada.open ("extensions/consultas.txt");
-  //getline (ficheroEntrada,frase); //Obtengo la primera linea
-
-  //shared_ptr<Name> newName = make_shared<Name>(Name(frase));
-  //NewName->toUri(frase);
-  //std::cout << "\n" << " >> Seq: " << seq << "\n" << std::endl;
-
-  /*if (seq%5 == 0){
-    seq = 1;
-  }
-  std::cout << "\n" << " >> Seq: " << seq << "\n" << std::endl;
-  */
 
   shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName); //crear nombre con secuencia
   nameWithSequence->appendSequenceNumber(seq); //agregar la secuencia al final.
@@ -247,7 +228,6 @@ Consumer2::SendPacket()
   
   m_transmittedInterests(interest, this, m_face);
   m_appLink->onReceiveInterest(*interest);
-  //std::cout << "\n" << " >> Llegue aca final SendPacket." << "\n" << std::endl;
 
   ScheduleNextPacket();
   }
