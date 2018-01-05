@@ -22,32 +22,25 @@ main(int argc, char* argv[]) // main
   // Se instancia la variable ndnHelper
   ndn::StackHelper ndnHelper;
 
-  ndnHelper.SetOldContentStore("ns3::ndn::cs::Fifo", "MaxSize", "200000");
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Double", "MaxSize", "10");
   //ndnHelper.setCsSize(100);
   //ndnHelper.setPolicy("nfd::cs::lru");
 
-  nodo1.Add(Names::Find<Node>("Node1"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo1); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node1")); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)
   //std::cout << "Instalando en el router 1 \n" << std::endl;
-  nodo2.Add(Names::Find<Node>("Node2"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo2); // Se instala la politica de reemplazo en el nodo 2 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node2")); // Se instala la politica de reemplazo en el nodo 2 (ROUTER)
   //std::cout << "Instalando en el router 2 \n" << std::endl;
-  nodo3.Add(Names::Find<Node>("Node3"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo3); // Se instala la politica de reemplazo en el nodo 3 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node3")); // Se instala la politica de reemplazo en el nodo 3 (ROUTER)
   //std::cout << "Instalando en el router 3 \n" << std::endl;
-  nodo4.Add(Names::Find<Node>("Node4"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo4); // Se instala la politica de reemplazo en el nodo 4 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node4")); // Se instala la politica de reemplazo en el nodo 4 (ROUTER)
   //std::cout << "Instalando en el router 4 \n" << std::endl;
-  nodo5.Add(Names::Find<Node>("Node5"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo5); // Se instala la politica de reemplazo en el nodo 5 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node5")); // Se instala la politica de reemplazo en el nodo 5 (ROUTER)
   //std::cout << "Instalando en el router 5 \n" << std::endl;
-  nodo6.Add(Names::Find<Node>("Node6"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo6); // Se instala la politica de reemplazo en el nodo 6 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node6")); // Se instala la politica de reemplazo en el nodo 6 (ROUTER)
   //std::cout << "Instalando en el router 6 \n" << std::endl;
-  nodo7.Add(Names::Find<Node>("Node7"));// Se busca el nodo segun nombre
-  ndnHelper.Install(nodo7); // Se instala la politica de reemplazo en el nodo 7 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node7")); // Se instala la politica de reemplazo en el nodo 7 (ROUTER)
   //std::cout << "Instalando en el router 7 \n" << std::endl;
-
+  
   ndnHelper.SetOldContentStore("ns3::ndn::cs::Nocache"); // Se define la politica de NO CACHE
   consumerNodes.Add(Names::Find<Node>("Node0")); // Se busca el nodo segun nombre
   ndnHelper.Install(consumerNodes); // Se instala la politica de reemplazo en el nodo CONSUMIDOR
@@ -68,13 +61,11 @@ main(int argc, char* argv[]) // main
 
   // Se instalan las aplicaciones NDN
   std::string prefix = "/prefix";
-  //std::string prefix1 = "/perro";
-  //std::string prefix2 = "/latercera";
-
+  
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
   consumerHelper.SetPrefix(prefix); // Seteo del prefijo
-  consumerHelper.SetAttribute("Frequency", DoubleValue (1000));
-  consumerHelper.SetAttribute("Randomize", StringValue("uniform")); // Seteo de la frecuencia en que enviara 
+  consumerHelper.SetAttribute("Frequency", DoubleValue (1));
+  //consumerHelper.SetAttribute("Randomize", StringValue("uniform")); // Seteo de la frecuencia en que enviara 
                                                               // los intereses (1 por segundo).
   consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
 
@@ -94,9 +85,9 @@ main(int argc, char* argv[]) // main
 
   Simulator::Stop(Seconds(20.0));
 
-  ndn::CsTracer::InstallAll("results/cs-trace-T2.txt", Seconds(0.5));
-  ndn::L3RateTracer::InstallAll("results/rate-trace-T2.txt", Seconds(0.5));
-  L2RateTracer::InstallAll("results/drop-trace-T2.txt", Seconds(0.5));
+  //ndn::CsTracer::InstallAll("results/cs-trace-T2.txt", Seconds(0.5));
+  //ndn::L3RateTracer::InstallAll("results/rate-trace-T2.txt", Seconds(0.5));
+  //L2RateTracer::InstallAll("results/drop-trace-T2.txt", Seconds(0.5));
 
 
   Simulator::Run();

@@ -11,7 +11,7 @@ library(doBy)
 #########################
 # Rate trace processing #
 #########################
-data = read.table("../results/FIFO/rate-trace-T1.txt", header=T)
+data = read.table("../results/FIFO/rate-trace-fifo-T2.txt", header=T)
 data$Node = factor(data$Node)
 data$FaceId <- factor(data$FaceId)
 data$Kilobits <- data$Kilobytes * 8
@@ -42,6 +42,6 @@ g.root <- ggplot(data.root) +
 
 print(g.root)
 
-png("../results/FIFO/root-rates-T1.png", width=500, height=250)
+png("../results/FIFO/root-rates-fifo-T2.png", width=500, height=250)
 print(g.root)
 retval <- dev.off()

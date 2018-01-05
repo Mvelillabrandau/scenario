@@ -192,7 +192,8 @@ Consumer2::SendPacket()
   //std::cout << "\n" << " >> Valor de aux. " << firstRead << "\n" << std::endl;
   if (firstRead){
 
-    ficheroEntrada.open ("extensions/logConsulta/LogInterest.dat");
+    //ficheroEntrada.open ("extensions/logConsulta/LogInterest.dat");
+    ficheroEntrada.open ("extensions/logConsulta/consultas.txt");
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
 

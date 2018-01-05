@@ -10,7 +10,7 @@ library(ggplot2)
 #########################
 # Rate trace processing #
 #########################
-data = read.table("../results/FIFO/drop-trace-T1.txt", header=T)
+data = read.table("../results/FIFO/drop-trace-fifo-T2.txt", header=T)
 data$Node = factor(data$Node)
 data$Kilobits <- data$Kilobytes * 8
 data$Type = factor(data$Type)
@@ -25,6 +25,6 @@ g.all <- ggplot(data, aes(x=Time, y=Kilobits, color=Type)) +
   facet_wrap(~ Node) +
   theme_bw()
 
-png("../results/FIFO/l2-rate-tracer-T1.png", width=800, height=500)
+png("../results/FIFO/l2-rate-tracer-fifo-T2.png", width=800, height=500)
 print(g.all)
 x = dev.off()
