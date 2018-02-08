@@ -203,7 +203,7 @@ Consumer2::SendPacket()
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
   }
-
+  std::string test = "prueba";
   shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName); //crear nombre con secuencia
   nameWithSequence->appendSequenceNumber(seq); //agregar la secuencia al final.
   

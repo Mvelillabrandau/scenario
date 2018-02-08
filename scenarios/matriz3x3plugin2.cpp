@@ -17,33 +17,31 @@ main(int argc, char* argv[]) // main
   topologyReader.Read(); // Lecura del archivo con la topologia.
 
   // Instancio el objeto consumerNodes
-  NodeContainer nodo1, nodo2, nodo3, nodo4, nodo5, nodo6 ,nodo7, consumerNodes;
+  //NodeContainer consumerNodes;
 
-  // Se instancia la variable ndnHelper
-  ndn::StackHelper ndnHelper;
+  // Se instala la pila NDN en algunos nodos.
+  ndn::StackHelper ndnHelper; 
+  ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10");
 
-  ndnHelper.SetOldContentStore("ns3::ndn::cs::Double", "MaxSize", "10");
-  //ndnHelper.setCsSize(100);
-  //ndnHelper.setPolicy("nfd::cs::lru");
-
-  ndnHelper.Install(Names::Find<Node>("Node1")); // Se instala la politica de reemplazo en el nodo 1 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node1")); 
   //std::cout << "Instalando en el router 1 \n" << std::endl;
-  ndnHelper.Install(Names::Find<Node>("Node2")); // Se instala la politica de reemplazo en el nodo 2 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node2")); 
   //std::cout << "Instalando en el router 2 \n" << std::endl;
-  ndnHelper.Install(Names::Find<Node>("Node3")); // Se instala la politica de reemplazo en el nodo 3 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node3")); 
   //std::cout << "Instalando en el router 3 \n" << std::endl;
-  ndnHelper.Install(Names::Find<Node>("Node4")); // Se instala la politica de reemplazo en el nodo 4 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node4")); 
   //std::cout << "Instalando en el router 4 \n" << std::endl;
-  ndnHelper.Install(Names::Find<Node>("Node5")); // Se instala la politica de reemplazo en el nodo 5 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node5")); 
   //std::cout << "Instalando en el router 5 \n" << std::endl;
-  ndnHelper.Install(Names::Find<Node>("Node6")); // Se instala la politica de reemplazo en el nodo 6 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node6"));
   //std::cout << "Instalando en el router 6 \n" << std::endl;
-  ndnHelper.Install(Names::Find<Node>("Node7")); // Se instala la politica de reemplazo en el nodo 7 (ROUTER)
+  ndnHelper.Install(Names::Find<Node>("Node7"));
   //std::cout << "Instalando en el router 7 \n" << std::endl;
   
   ndnHelper.SetOldContentStore("ns3::ndn::cs::Nocache"); // Se define la politica de NO CACHE
-  consumerNodes.Add(Names::Find<Node>("Node0")); // Se busca el nodo segun nombre
-  ndnHelper.Install(consumerNodes); // Se instala la politica de reemplazo en el nodo CONSUMIDOR
+  Ptr<Node> consumer = Names::Find<Node>("Node0");
+  //consumerNodes.Add(Names::Find<Node>("Node0")); // Se busca el nodo segun nombre
+  ndnHelper.Install(consumer); // Se instala la politica de reemplazo en el nodo CONSUMIDOR
   //std::cout << "Instalando en el router consumidor \n" << std::endl;
 
   ndnHelper.SetOldContentStore("ns3::ndn::cs::Nocache"); // Se define la politica de NO CACHE
@@ -51,23 +49,22 @@ main(int argc, char* argv[]) // main
   ndnHelper.Install(producer); // Se instala la politica de reemplazo en el nodo PRODUCTOR
   //std::cout << "Instalando en el router PRODUCTOR \n" << std::endl;
 
-  // Set BestRoute strategy
-  ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/best-route");
+  std::string prefix = "/prefix";
+
+  // Configura la estrategia de enrutamiento
+  ndn::StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
 
   // Installing global routing interface on all nodes
   ndn::GlobalRoutingHelper ndnGlobalRoutingHelper;
   ndnGlobalRoutingHelper.InstallAll();
 
-
-  // Se instalan las aplicaciones NDN
-  std::string prefix = "/prefix";
   
   ndn::AppHelper consumerHelper("ns3::ndn::ConsumerCbr2"); // Se crea la instancia
   consumerHelper.SetPrefix(prefix); // Seteo del prefijo
   consumerHelper.SetAttribute("Frequency", DoubleValue (1));
   //consumerHelper.SetAttribute("Randomize", StringValue("uniform")); // Seteo de la frecuencia en que enviara 
                                                               // los intereses (1 por segundo).
-  consumerHelper.Install(consumerNodes); // Se installa la aplicacion en uno o mas nodos.
+  consumerHelper.Install(consumer); // Se installa la aplicacion en uno o mas nodos.
 
   ndn::AppHelper producerHelper("ns3::ndn::Producer2"); // Se crea la instancia
   producerHelper.SetPrefix(prefix); //Seteo del prefijo
