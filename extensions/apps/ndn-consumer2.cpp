@@ -40,6 +40,7 @@
 #include <iostream>
 #include <fstream>
 
+
 NS_LOG_COMPONENT_DEFINE("ndn.Consumer2");
 
 namespace ns3 {
@@ -203,9 +204,18 @@ Consumer2::SendPacket()
     getline (ficheroEntrada,frase);
     seq = std::stoi(frase);
   }
-  std::string test = "prueba";
+
+ //std::cout << "\n" << " >> m_interestName es :" << m_interestName << "\n" << std::endl;
+  std::string test = "CACA";
+
+  shared_ptr<Name> nameWithSequence2 = make_shared<Name>(test); 
+  nameWithSequence2->appendSequenceNumber(seq);
+  std::cout << "\n" << " >> secuencia es:" <<  *nameWithSequence2 << "\n" << std::endl;
+
   shared_ptr<Name> nameWithSequence = make_shared<Name>(m_interestName); //crear nombre con secuencia
   nameWithSequence->appendSequenceNumber(seq); //agregar la secuencia al final.
+
+
   
 
   //shared_ptr<Interest> interest = make_shared<Interest> ();
@@ -214,6 +224,7 @@ Consumer2::SendPacket()
                        //aleatoriamente que se usa para detectar y descartar mensajes de interés duplicados
 
   interest->setName(*nameWithSequence);
+  //interest->setName(test);
 
   time::milliseconds interestLifeTime(m_interestLifeTime.GetMilliSeconds());
   interest->setInterestLifetime(interestLifeTime);// indica el tiempo (aproximado) restante antes de 
@@ -223,7 +234,7 @@ Consumer2::SendPacket()
   // NS_LOG_INFO ("Requesting Interest: \n" << *interest);
   NS_LOG_INFO("> Interest for " << seq);
 
-  WillSendOutInterest(seq); //Un evento que se dispara justo antes de enviar 
+  //WillSendOutInterest(seq); //Un evento que se dispara justo antes de enviar 
                             //un paquete de Interés (el envío es inevitable)
   std::cout << "\n" << " >> Enviando el siguiente interes: " << interest->getName() << "\n" << std::endl;
   
